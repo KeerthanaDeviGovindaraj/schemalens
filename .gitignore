@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+schemalens.db
+.schemalens/
+.env
+docker/initdb/01-pagila-schema.sql
+docker/initdb/02-pagila-data.sql
+web/node_modules/
+web/dist/

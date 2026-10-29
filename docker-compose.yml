@@ -1,0 +1,17 @@
+# Local Postgres with Pagila + benchmark fixtures.
+# First run scripts/get_pagila.sh. Port 5433 avoids clashing with a local Postgres.
+services:
+  db:
+    image: pgvector/pgvector:pg18
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: pagila
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./docker/initdb:/docker-entrypoint-initdb.d:ro
+      - pgdata:/var/lib/postgresql
+
+volumes:
+  pgdata:

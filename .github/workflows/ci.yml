@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: ruff check . && ruff format --check .
+      - run: pytest -m "not integration"
+
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: pagila
+        ports: ["5433:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PGPASSWORD: postgres
+      SCHEMALENS_TEST_DSN: postgresql://postgres:postgres@localhost:5433/pagila
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: bash scripts/get_pagila.sh
+      - name: Load Pagila and fixtures
+        run: |
+          for f in docker/initdb/*.sql; do
+            psql -h localhost -p 5433 -U postgres -d pagila -v ON_ERROR_STOP=1 -q -f "$f"
+          done
+      - run: pytest -m integration
+      # Task 4.4: add the benchmark gate once the baseline is recorded, e.g.
+      # - run: schemalens scan --dsn "$SCHEMALENS_TEST_DSN" && schemalens bench --min-f1 0.90

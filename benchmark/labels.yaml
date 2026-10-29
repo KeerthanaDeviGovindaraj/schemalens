@@ -1,0 +1,43 @@
+# Ground truth for `schemalens bench`.
+# Key: schema.name(identity args) exactly as pg_get_function_identity_arguments prints them.
+# Label by reading the source BEFORE looking at analyzer output. Never edit a label to match the analyzer.
+# Semantics: see design.md section 2 ("Labeling semantics").
+
+- routine: bench.cte_top_films(p_limit integer)
+  reads: [public.film, public.inventory, public.rental]
+  writes: []
+
+- routine: bench.archive_old_rentals(p_before timestamp with time zone)
+  reads: []
+  writes: [bench.rental_archive, public.rental]
+
+- routine: bench.apply_late_fees(p_fee numeric)
+  reads: [public.rental]
+  writes: [public.payment]
+
+- routine: bench.refresh_store_stats()
+  reads: [public.customer]
+  writes: [bench.store_stats]  # also truncated via dynamic SQL (same table)
+  dynamic: true
+
+- routine: bench.customer_exists(p_email text)
+  reads: [public.customer]
+  writes: []
+
+- routine: bench.touch_last_update()
+  reads: []
+  writes: []
+
+- routine: bench.rentals_for_film(integer)
+  reads: [public.inventory, public.rental]
+  writes: []
+
+- routine: bench.film_title(p_film_id integer)
+  reads: [public.film]
+  writes: []
+
+# TODO (task 4.1): label every Pagila routine in schema public.
+# List them with:
+#   SELECT p.proname || '(' || pg_get_function_identity_arguments(p.oid) || ')'
+#   FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace
+#   WHERE n.nspname = 'public' AND p.prokind IN ('f','p');
