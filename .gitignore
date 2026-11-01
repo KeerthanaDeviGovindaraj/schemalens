@@ -14,3 +14,7 @@ docker/initdb/01-pagila-schema.sql
 docker/initdb/02-pagila-data.sql
 web/node_modules/
 web/dist/
+web/public/bundle.json
+web/*.tsbuildinfo
+src/schemalens/web_dist/
+benchmark/RESULTS.md

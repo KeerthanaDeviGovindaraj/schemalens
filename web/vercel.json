@@ -1,0 +1,7 @@
+{
+  "buildCommand": "VITE_DATA_MODE=static npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm ci",
+  "framework": "vite",
+  "rewrites": [{ "source": "/((?!assets/|bundle.json).*)", "destination": "/index.html" }]
+}

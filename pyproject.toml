@@ -19,7 +19,7 @@ dependencies = [
   "uvicorn>=0.29",
   "pydantic>=2.6",
   "pyyaml>=6",
-  "mcp>=1.0",
+  "mcp>=1.0,<2",
 ]
 
 [project.optional-dependencies]
@@ -30,10 +30,20 @@ schemalens = "schemalens.cli:app"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/schemalens"]
+# Ship the built web UI inside the wheel so `schemalens serve` works after
+# `pip install schemalens`. web_dist is git-ignored, so it is listed as an
+# artifact to include it when present at build time (see docs/packaging.md).
+# Build it first: `cd web && npm run build`, then copy web/dist/* into
+# src/schemalens/web_dist/.
+artifacts = ["src/schemalens/web_dist/**"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 markers = ["integration: needs the Postgres from docker compose"]
+filterwarnings = [
+  # starlette's TestClient warns about httpx; harmless for our usage
+  "ignore::starlette.exceptions.StarletteDeprecationWarning",
+]
 
 [tool.ruff]
 line-length = 110

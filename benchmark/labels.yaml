@@ -36,6 +36,38 @@
   reads: [public.film]
   writes: []
 
+- routine: bench.category_depth()
+  reads: [public.category]
+  writes: []
+
+- routine: bench.sync_customer_activebit()
+  reads: [public.rental]
+  writes: [public.customer]
+
+- routine: bench.purge_orphan_payments()
+  reads: [public.payment, public.rental]
+  writes: [public.payment]
+
+- routine: bench.upsert_store_stat(p_store integer, p_customers bigint)
+  reads: []
+  writes: [bench.store_stats]
+
+- routine: bench.count_active_customers()
+  reads: [public.customer_list]
+  writes: []
+
+- routine: bench.rebuild_archive()
+  reads: [public.rental]
+  writes: [bench.rental_archive]
+
+- routine: bench.top_customer_city()
+  reads: [public.address, public.city, public.customer]
+  writes: []
+
+- routine: bench.tag_long_films()
+  reads: [public.film]
+  writes: [public.film]
+
 # TODO (task 4.1): label every Pagila routine in schema public.
 # List them with:
 #   SELECT p.proname || '(' || pg_get_function_identity_arguments(p.oid) || ')'

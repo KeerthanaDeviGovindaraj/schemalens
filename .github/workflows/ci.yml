@@ -45,5 +45,20 @@ jobs:
             psql -h localhost -p 5433 -U postgres -d pagila -v ON_ERROR_STOP=1 -q -f "$f"
           done
       - run: pytest -m integration
-      # Task 4.4: add the benchmark gate once the baseline is recorded, e.g.
-      # - run: schemalens scan --dsn "$SCHEMALENS_TEST_DSN" && schemalens bench --min-f1 0.90
+      - name: Benchmark gate
+        run: |
+          schemalens scan --dsn "$SCHEMALENS_TEST_DSN" --search-path "public,bench"
+          schemalens bench --min-f1 0.90
+
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci
+      - run: npm run build

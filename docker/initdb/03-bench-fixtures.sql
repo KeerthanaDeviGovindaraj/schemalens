@@ -125,3 +125,96 @@ BEGIN
   RETURN v_title;
 END;
 $$;
+
+-- 9. Recursive CTE: the self-reference to the CTE name is not a table.
+CREATE FUNCTION bench.category_depth()
+RETURNS TABLE (category_id integer, depth integer)
+LANGUAGE sql STABLE AS $$
+  WITH RECURSIVE tree AS (
+    SELECT c.category_id, 1 AS depth FROM public.category c
+    UNION ALL
+    SELECT c.category_id, t.depth + 1
+    FROM public.category c JOIN tree t ON c.category_id = t.category_id
+  )
+  SELECT category_id, max(depth) FROM tree GROUP BY category_id;
+$$;
+
+-- 10. UPDATE with a correlated subquery in SET: read of the subquery table.
+CREATE FUNCTION bench.sync_customer_activebit()
+RETURNS void
+LANGUAGE plpgsql AS $$
+BEGIN
+  UPDATE public.customer c
+  SET active = (
+    SELECT count(*) > 0 FROM public.rental r WHERE r.customer_id = c.customer_id
+  )::int;
+END;
+$$;
+
+-- 11. DELETE whose rows come from a CTE reading another table.
+CREATE FUNCTION bench.purge_orphan_payments()
+RETURNS void
+LANGUAGE plpgsql AS $$
+BEGIN
+  WITH orphans AS (
+    SELECT p.payment_id FROM public.payment p
+    LEFT JOIN public.rental r ON r.rental_id = p.rental_id
+    WHERE r.rental_id IS NULL
+  )
+  DELETE FROM public.payment WHERE payment_id IN (SELECT payment_id FROM orphans);
+END;
+$$;
+
+-- 12. INSERT ... ON CONFLICT DO UPDATE: single write target.
+CREATE FUNCTION bench.upsert_store_stat(p_store integer, p_customers bigint)
+RETURNS void
+LANGUAGE plpgsql AS $$
+BEGIN
+  INSERT INTO bench.store_stats (store_id, customers)
+  VALUES (p_store, p_customers)
+  ON CONFLICT (store_id) DO UPDATE SET customers = excluded.customers;
+END;
+$$;
+
+-- 13. Function that reads a view (views are relations too).
+CREATE FUNCTION bench.count_active_customers()
+RETURNS bigint
+LANGUAGE sql STABLE AS $$
+  SELECT count(*) FROM public.customer_list;
+$$;
+
+-- 14. Several independent statements in one body: reads + writes accumulate.
+CREATE FUNCTION bench.rebuild_archive()
+RETURNS void
+LANGUAGE plpgsql AS $$
+BEGIN
+  DELETE FROM bench.rental_archive;
+  INSERT INTO bench.rental_archive SELECT * FROM public.rental WHERE return_date IS NOT NULL;
+END;
+$$;
+
+-- 15. Nested subquery two levels deep, plus a join: all three tables are reads.
+CREATE FUNCTION bench.top_customer_city()
+RETURNS text
+LANGUAGE sql STABLE AS $$
+  SELECT ci.city
+  FROM public.city ci
+  WHERE ci.city_id IN (
+    SELECT a.city_id FROM public.address a
+    WHERE a.address_id IN (SELECT cu.address_id FROM public.customer cu)
+  )
+  LIMIT 1;
+$$;
+
+-- 16. FOR loop over a query (reads) that writes inside the loop body.
+CREATE FUNCTION bench.tag_long_films()
+RETURNS void
+LANGUAGE plpgsql AS $$
+DECLARE
+  rec record;
+BEGIN
+  FOR rec IN SELECT film_id FROM public.film WHERE length > 180 LOOP
+    UPDATE public.film SET rental_duration = rental_duration WHERE film_id = rec.film_id;
+  END LOOP;
+END;
+$$;

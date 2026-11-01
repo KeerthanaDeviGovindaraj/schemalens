@@ -241,3 +241,104 @@ def test_resolver():
     assert resolve(T("store_stats"), known) is None
     assert resolve(T("store_stats"), known, ["bench", "public"]) == "bench.store_stats"
     assert resolve(T("tmp_x"), known) is None
+
+
+# ---------------------------------------------------------------- extra patterns (task 4.2)
+
+
+def test_recursive_cte_self_reference_is_not_a_table():
+    d = analyze_sql(
+        "WITH RECURSIVE tree AS ("
+        "  SELECT c.category_id, 1 AS depth FROM public.category c"
+        "  UNION ALL"
+        "  SELECT c.category_id, t.depth + 1"
+        "  FROM public.category c JOIN tree t ON c.category_id = t.category_id"
+        ") SELECT category_id, max(depth) FROM tree GROUP BY category_id"
+    )
+    assert d.reads == refs("public.category")
+    assert d.writes == set()
+
+
+def test_update_with_correlated_subquery_in_set():
+    d = analyze_sql(
+        "UPDATE public.customer c SET active = ("
+        "  SELECT count(*) > 0 FROM public.rental r WHERE r.customer_id = c.customer_id"
+        ")::int"
+    )
+    assert d.writes == refs("public.customer")
+    assert d.reads == refs("public.rental")
+
+
+def test_delete_with_cte_reading_two_tables():
+    d = analyze_sql(
+        "WITH orphans AS ("
+        "  SELECT p.payment_id FROM public.payment p"
+        "  LEFT JOIN public.rental r ON r.rental_id = p.rental_id WHERE r.rental_id IS NULL"
+        ") DELETE FROM public.payment WHERE payment_id IN (SELECT payment_id FROM orphans)"
+    )
+    assert d.writes == refs("public.payment")
+    assert d.reads == refs("public.payment", "public.rental")
+
+
+def test_insert_on_conflict_do_update_single_write():
+    d = analyze_sql(
+        "INSERT INTO bench.store_stats (store_id, customers) VALUES (1, 2) "
+        "ON CONFLICT (store_id) DO UPDATE SET customers = excluded.customers"
+    )
+    assert d.writes == refs("bench.store_stats")
+    assert d.reads == set()
+
+
+def test_nested_subquery_two_levels():
+    d = analyze_sql(
+        "SELECT ci.city FROM public.city ci WHERE ci.city_id IN ("
+        "  SELECT a.city_id FROM public.address a WHERE a.address_id IN ("
+        "    SELECT cu.address_id FROM public.customer cu"
+        "  )"
+        ")"
+    )
+    assert d.reads == refs("public.address", "public.city", "public.customer")
+    assert d.writes == set()
+
+
+FOR_LOOP = """
+CREATE OR REPLACE FUNCTION bench.tag_long_films()
+ RETURNS void
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+  rec record;
+BEGIN
+  FOR rec IN SELECT film_id FROM public.film WHERE length > 180 LOOP
+    UPDATE public.film SET rental_duration = rental_duration WHERE film_id = rec.film_id;
+  END LOOP;
+END;
+$function$
+"""
+
+
+def test_for_loop_reads_query_and_writes_in_body():
+    d = analyze_routine(FOR_LOOP, "plpgsql")
+    assert d.reads == refs("public.film")
+    assert d.writes == refs("public.film")
+    assert d.flags == []
+
+
+MULTI_STMT = """
+CREATE OR REPLACE FUNCTION bench.rebuild_archive()
+ RETURNS void
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+  DELETE FROM bench.rental_archive;
+  INSERT INTO bench.rental_archive SELECT * FROM public.rental WHERE return_date IS NOT NULL;
+END;
+$function$
+"""
+
+
+def test_multiple_statements_accumulate():
+    d = analyze_routine(MULTI_STMT, "plpgsql")
+    assert d.writes == refs("bench.rental_archive")
+    assert d.reads == refs("public.rental")
+    assert d.flags == []
