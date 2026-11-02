@@ -14,7 +14,7 @@ docker/initdb/01-pagila-schema.sql
 docker/initdb/02-pagila-data.sql
 web/node_modules/
 web/dist/
-web/public/bundle.json
 web/*.tsbuildinfo
+# web/public/bundle.json is committed so the Vercel static demo has data at build time
 src/schemalens/web_dist/
 benchmark/RESULTS.md

@@ -1,0 +1,2180 @@
+{
+  "meta": {
+    "db_name": "pagila",
+    "scanned_at": "2026-11-01T23:11:10.094513+00:00",
+    "server_version": "18.6 (Debian 18.6-1.pgdg12+2)",
+    "schemalens_version": "0.1.0",
+    "search_path": "public,bench"
+  },
+  "relations": [
+    {
+      "id": "bench.rental_archive",
+      "schema": "bench",
+      "name": "rental_archive",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "rental_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "rental_date",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "inventory_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "customer_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "return_date",
+          "data_type": "timestamp with time zone",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "staff_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "uuid",
+          "data_type": "uuid",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "bench.store_stats",
+      "schema": "bench",
+      "name": "store_stats",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "store_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "customers",
+          "data_type": "bigint",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "public.actor",
+      "schema": "public",
+      "name": "actor",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "actor_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": "nextval('actor_actor_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "first_name",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_name",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "public.actor_info",
+      "schema": "public",
+      "name": "actor_info",
+      "kind": "view",
+      "comment": null,
+      "columns": [
+        {
+          "name": "actor_id",
+          "data_type": "integer",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "first_name",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_name",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "film_info",
+          "data_type": "jsonb",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "public.address",
+      "schema": "public",
+      "name": "address",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "address_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": "nextval('address_address_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "address",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "address2",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "district",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "city_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "postal_code",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "phone",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": "address_city_id_fkey",
+          "from_cols": [
+            "city_id"
+          ],
+          "to_relation": "public.city",
+          "to_cols": [
+            "city_id"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public.category",
+      "schema": "public",
+      "name": "category",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "category_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": "nextval('category_category_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "name",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "public.city",
+      "schema": "public",
+      "name": "city",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "city_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": "nextval('city_city_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "city",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "country_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": "city_country_id_fkey",
+          "from_cols": [
+            "country_id"
+          ],
+          "to_relation": "public.country",
+          "to_cols": [
+            "country_id"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public.country",
+      "schema": "public",
+      "name": "country",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "country_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": "nextval('country_country_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "country",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "public.customer",
+      "schema": "public",
+      "name": "customer",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "customer_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": "nextval('customer_customer_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "store_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "first_name",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_name",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "email",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "address_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "activebool",
+          "data_type": "boolean",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "true",
+          "comment": null
+        },
+        {
+          "name": "create_date",
+          "data_type": "date",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "CURRENT_DATE",
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        },
+        {
+          "name": "active",
+          "data_type": "integer",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "uuid",
+          "data_type": "uuid",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "uuidv7()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": "customer_address_id_fkey",
+          "from_cols": [
+            "address_id"
+          ],
+          "to_relation": "public.address",
+          "to_cols": [
+            "address_id"
+          ]
+        },
+        {
+          "name": "customer_store_id_fkey",
+          "from_cols": [
+            "store_id"
+          ],
+          "to_relation": "public.store",
+          "to_cols": [
+            "store_id"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public.customer_list",
+      "schema": "public",
+      "name": "customer_list",
+      "kind": "view",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "integer",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "name",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "address",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "zip code",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "phone",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "city",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "country",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "notes",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "sid",
+          "data_type": "integer",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "public.film",
+      "schema": "public",
+      "name": "film",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "film_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": "nextval('film_film_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "title",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "description",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "release_year",
+          "data_type": "year",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "language_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "original_language_id",
+          "data_type": "integer",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "rental_duration",
+          "data_type": "smallint",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "3",
+          "comment": null
+        },
+        {
+          "name": "rental_rate",
+          "data_type": "numeric(4,2)",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "4.99",
+          "comment": null
+        },
+        {
+          "name": "length",
+          "data_type": "smallint",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "replacement_cost",
+          "data_type": "numeric(5,2)",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "19.99",
+          "comment": null
+        },
+        {
+          "name": "rating",
+          "data_type": "mpaa_rating",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": "'G'::mpaa_rating",
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        },
+        {
+          "name": "special_features",
+          "data_type": "text[]",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "fulltext",
+          "data_type": "tsvector",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "length_hours",
+          "data_type": "numeric(4,2)",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": "round(((length)::numeric / 60.0), 2)",
+          "comment": null
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": "film_language_id_fkey",
+          "from_cols": [
+            "language_id"
+          ],
+          "to_relation": "public.language",
+          "to_cols": [
+            "language_id"
+          ]
+        },
+        {
+          "name": "film_original_language_id_fkey",
+          "from_cols": [
+            "original_language_id"
+          ],
+          "to_relation": "public.language",
+          "to_cols": [
+            "language_id"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public.film_actor",
+      "schema": "public",
+      "name": "film_actor",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "actor_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "film_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": "film_actor_actor_id_fkey",
+          "from_cols": [
+            "actor_id"
+          ],
+          "to_relation": "public.actor",
+          "to_cols": [
+            "actor_id"
+          ]
+        },
+        {
+          "name": "film_actor_film_id_fkey",
+          "from_cols": [
+            "film_id"
+          ],
+          "to_relation": "public.film",
+          "to_cols": [
+            "film_id"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public.film_category",
+      "schema": "public",
+      "name": "film_category",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "film_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "category_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": "film_category_category_id_fkey",
+          "from_cols": [
+            "category_id"
+          ],
+          "to_relation": "public.category",
+          "to_cols": [
+            "category_id"
+          ]
+        },
+        {
+          "name": "film_category_film_id_fkey",
+          "from_cols": [
+            "film_id"
+          ],
+          "to_relation": "public.film",
+          "to_cols": [
+            "film_id"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public.film_embedding",
+      "schema": "public",
+      "name": "film_embedding",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "film_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "embedding",
+          "data_type": "vector(20)",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": "film_embedding_film_id_fkey",
+          "from_cols": [
+            "film_id"
+          ],
+          "to_relation": "public.film",
+          "to_cols": [
+            "film_id"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public.film_list",
+      "schema": "public",
+      "name": "film_list",
+      "kind": "view",
+      "comment": null,
+      "columns": [
+        {
+          "name": "fid",
+          "data_type": "integer",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "title",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "description",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "category",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "price",
+          "data_type": "numeric(4,2)",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "length",
+          "data_type": "smallint",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "rating",
+          "data_type": "mpaa_rating",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "actors",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "public.inventory",
+      "schema": "public",
+      "name": "inventory",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "inventory_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": "nextval('inventory_inventory_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "film_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "store_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": "inventory_film_id_fkey",
+          "from_cols": [
+            "film_id"
+          ],
+          "to_relation": "public.film",
+          "to_cols": [
+            "film_id"
+          ]
+        },
+        {
+          "name": "inventory_store_id_fkey",
+          "from_cols": [
+            "store_id"
+          ],
+          "to_relation": "public.store",
+          "to_cols": [
+            "store_id"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public.language",
+      "schema": "public",
+      "name": "language",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "language_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": "nextval('language_language_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "name",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "public.nicer_but_slower_film_list",
+      "schema": "public",
+      "name": "nicer_but_slower_film_list",
+      "kind": "view",
+      "comment": null,
+      "columns": [
+        {
+          "name": "fid",
+          "data_type": "integer",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "title",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "description",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "category",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "price",
+          "data_type": "numeric(4,2)",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "length",
+          "data_type": "smallint",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "rating",
+          "data_type": "mpaa_rating",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "actors",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "public.payment",
+      "schema": "public",
+      "name": "payment",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "payment_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": "nextval('payment_payment_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "customer_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "staff_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "rental_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "amount",
+          "data_type": "numeric(5,2)",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "payment_date",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "uuid",
+          "data_type": "uuid",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "uuidv7()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "public.rental",
+      "schema": "public",
+      "name": "rental",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "rental_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": "nextval('rental_rental_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "rental_date",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "inventory_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "customer_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "return_date",
+          "data_type": "timestamp with time zone",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "staff_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        },
+        {
+          "name": "uuid",
+          "data_type": "uuid",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "uuidv7()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": "rental_customer_id_fkey",
+          "from_cols": [
+            "customer_id"
+          ],
+          "to_relation": "public.customer",
+          "to_cols": [
+            "customer_id"
+          ]
+        },
+        {
+          "name": "rental_inventory_id_fkey",
+          "from_cols": [
+            "inventory_id"
+          ],
+          "to_relation": "public.inventory",
+          "to_cols": [
+            "inventory_id"
+          ]
+        },
+        {
+          "name": "rental_staff_id_fkey",
+          "from_cols": [
+            "staff_id"
+          ],
+          "to_relation": "public.staff",
+          "to_cols": [
+            "staff_id"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public.rental_by_category",
+      "schema": "public",
+      "name": "rental_by_category",
+      "kind": "matview",
+      "comment": null,
+      "columns": [
+        {
+          "name": "category",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "total_sales",
+          "data_type": "numeric",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "public.sales_by_film_category",
+      "schema": "public",
+      "name": "sales_by_film_category",
+      "kind": "view",
+      "comment": null,
+      "columns": [
+        {
+          "name": "category",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "total_sales",
+          "data_type": "numeric",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "public.sales_by_store",
+      "schema": "public",
+      "name": "sales_by_store",
+      "kind": "view",
+      "comment": null,
+      "columns": [
+        {
+          "name": "store",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "manager",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "total_sales",
+          "data_type": "numeric",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "public.staff",
+      "schema": "public",
+      "name": "staff",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "staff_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": "nextval('staff_staff_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "first_name",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_name",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "address_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "email",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "store_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "active",
+          "data_type": "boolean",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "true",
+          "comment": null
+        },
+        {
+          "name": "username",
+          "data_type": "text",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "password",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        },
+        {
+          "name": "picture",
+          "data_type": "bytea",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": "staff_address_id_fkey",
+          "from_cols": [
+            "address_id"
+          ],
+          "to_relation": "public.address",
+          "to_cols": [
+            "address_id"
+          ]
+        },
+        {
+          "name": "staff_store_id_fkey",
+          "from_cols": [
+            "store_id"
+          ],
+          "to_relation": "public.store",
+          "to_cols": [
+            "store_id"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public.staff_list",
+      "schema": "public",
+      "name": "staff_list",
+      "kind": "view",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "integer",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "name",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "address",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "zip code",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "phone",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "city",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "country",
+          "data_type": "text",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "sid",
+          "data_type": "integer",
+          "nullable": true,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        }
+      ],
+      "foreign_keys": []
+    },
+    {
+      "id": "public.store",
+      "schema": "public",
+      "name": "store",
+      "kind": "table",
+      "comment": null,
+      "columns": [
+        {
+          "name": "store_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": true,
+          "default_expr": "nextval('store_store_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "manager_staff_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "address_id",
+          "data_type": "integer",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": null,
+          "comment": null
+        },
+        {
+          "name": "last_update",
+          "data_type": "timestamp with time zone",
+          "nullable": false,
+          "is_pk": false,
+          "default_expr": "now()",
+          "comment": null
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": "store_address_id_fkey",
+          "from_cols": [
+            "address_id"
+          ],
+          "to_relation": "public.address",
+          "to_cols": [
+            "address_id"
+          ]
+        }
+      ]
+    }
+  ],
+  "routines": [
+    {
+      "id": "rtn_daf1981e09",
+      "schema": "bench",
+      "name": "apply_late_fees",
+      "args": "p_fee numeric",
+      "returns": "void",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.apply_late_fees(p_fee numeric)\n RETURNS void\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n  UPDATE public.payment p\n  SET amount = p.amount + p_fee\n  FROM public.rental r\n  WHERE r.rental_id = p.rental_id\n    AND r.return_date IS NULL;\nEND;\n$function$\n",
+      "reads": [
+        "public.rental"
+      ],
+      "writes": [
+        "public.payment"
+      ],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_50279568b4",
+      "schema": "bench",
+      "name": "archive_old_rentals",
+      "args": "p_before timestamp with time zone",
+      "returns": "integer",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.archive_old_rentals(p_before timestamp with time zone)\n RETURNS integer\n LANGUAGE plpgsql\nAS $function$\nDECLARE\n  v_count integer;\nBEGIN\n  WITH moved AS (\n    DELETE FROM public.rental\n    WHERE return_date < p_before\n    RETURNING *\n  )\n  INSERT INTO bench.rental_archive\n  SELECT * FROM moved;\n  GET DIAGNOSTICS v_count = ROW_COUNT;\n  RETURN v_count;\nEND;\n$function$\n",
+      "reads": [],
+      "writes": [
+        "bench.rental_archive",
+        "public.rental"
+      ],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_f4c00d69e8",
+      "schema": "bench",
+      "name": "category_depth",
+      "args": "",
+      "returns": "TABLE(category_id integer, depth integer)",
+      "kind": "function",
+      "language": "sql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.category_depth()\n RETURNS TABLE(category_id integer, depth integer)\n LANGUAGE sql\n STABLE\nAS $function$\n  WITH RECURSIVE tree AS (\n    SELECT c.category_id, 1 AS depth FROM public.category c\n    UNION ALL\n    SELECT c.category_id, t.depth + 1\n    FROM public.category c JOIN tree t ON c.category_id = t.category_id\n  )\n  SELECT category_id, max(depth) FROM tree GROUP BY category_id;\n$function$\n",
+      "reads": [
+        "public.category"
+      ],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_6b8d88d0ba",
+      "schema": "bench",
+      "name": "count_active_customers",
+      "args": "",
+      "returns": "bigint",
+      "kind": "function",
+      "language": "sql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.count_active_customers()\n RETURNS bigint\n LANGUAGE sql\n STABLE\nAS $function$\n  SELECT count(*) FROM public.customer_list;\n$function$\n",
+      "reads": [
+        "public.customer_list"
+      ],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_1feaafe1a7",
+      "schema": "bench",
+      "name": "cte_top_films",
+      "args": "p_limit integer",
+      "returns": "TABLE(title text, rentals bigint)",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.cte_top_films(p_limit integer)\n RETURNS TABLE(title text, rentals bigint)\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n  RETURN QUERY\n  WITH counts AS (\n    SELECT i.film_id, count(*) AS n\n    FROM public.rental r\n    JOIN public.inventory i ON i.inventory_id = r.inventory_id\n    GROUP BY i.film_id\n  )\n  SELECT f.title::text, c.n\n  FROM counts c\n  JOIN public.film f ON f.film_id = c.film_id\n  ORDER BY c.n DESC\n  LIMIT p_limit;\nEND;\n$function$\n",
+      "reads": [
+        "public.film",
+        "public.inventory",
+        "public.rental"
+      ],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_303cf4980f",
+      "schema": "bench",
+      "name": "customer_exists",
+      "args": "p_email text",
+      "returns": "boolean",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.customer_exists(p_email text)\n RETURNS boolean\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n  IF EXISTS (SELECT 1 FROM public.customer WHERE email = p_email) THEN\n    RETURN true;\n  END IF;\n  RETURN false;\nEND;\n$function$\n",
+      "reads": [
+        "public.customer"
+      ],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_55759798cd",
+      "schema": "bench",
+      "name": "film_title",
+      "args": "p_film_id integer",
+      "returns": "text",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.film_title(p_film_id integer)\n RETURNS text\n LANGUAGE plpgsql\nAS $function$\nDECLARE\n  v_title text;\nBEGIN\n  SELECT title INTO v_title FROM film WHERE film_id = p_film_id;\n  RETURN v_title;\nEND;\n$function$\n",
+      "reads": [
+        "public.film"
+      ],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_88236c5047",
+      "schema": "bench",
+      "name": "purge_orphan_payments",
+      "args": "",
+      "returns": "void",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.purge_orphan_payments()\n RETURNS void\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n  WITH orphans AS (\n    SELECT p.payment_id FROM public.payment p\n    LEFT JOIN public.rental r ON r.rental_id = p.rental_id\n    WHERE r.rental_id IS NULL\n  )\n  DELETE FROM public.payment WHERE payment_id IN (SELECT payment_id FROM orphans);\nEND;\n$function$\n",
+      "reads": [
+        "public.payment",
+        "public.rental"
+      ],
+      "writes": [
+        "public.payment"
+      ],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_2b600cdafa",
+      "schema": "bench",
+      "name": "rebuild_archive",
+      "args": "",
+      "returns": "void",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.rebuild_archive()\n RETURNS void\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n  DELETE FROM bench.rental_archive;\n  INSERT INTO bench.rental_archive SELECT * FROM public.rental WHERE return_date IS NOT NULL;\nEND;\n$function$\n",
+      "reads": [
+        "public.rental"
+      ],
+      "writes": [
+        "bench.rental_archive"
+      ],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_006cb7e9e3",
+      "schema": "bench",
+      "name": "refresh_store_stats",
+      "args": "",
+      "returns": "void",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.refresh_store_stats()\n RETURNS void\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n  EXECUTE format('TRUNCATE %I.%I', 'bench', 'store_stats');\n  INSERT INTO bench.store_stats (store_id, customers)\n  SELECT store_id, count(*)\n  FROM public.customer\n  GROUP BY store_id;\nEND;\n$function$\n",
+      "reads": [
+        "public.customer"
+      ],
+      "writes": [
+        "bench.store_stats"
+      ],
+      "flags": [
+        {
+          "kind": "dynamic_sql",
+          "detail": "PLpgSQL_stmt_dynexecute"
+        }
+      ],
+      "explanation": null
+    },
+    {
+      "id": "rtn_6e1044d6fe",
+      "schema": "bench",
+      "name": "rentals_for_film",
+      "args": "integer",
+      "returns": "bigint",
+      "kind": "function",
+      "language": "sql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.rentals_for_film(integer)\n RETURNS bigint\n LANGUAGE sql\n STABLE\nAS $function$\n  SELECT count(*)\n  FROM public.rental r\n  JOIN public.inventory i ON i.inventory_id = r.inventory_id\n  WHERE i.film_id = $1;\n$function$\n",
+      "reads": [
+        "public.inventory",
+        "public.rental"
+      ],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_e3bfd2393c",
+      "schema": "bench",
+      "name": "sync_customer_activebit",
+      "args": "",
+      "returns": "void",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.sync_customer_activebit()\n RETURNS void\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n  UPDATE public.customer c\n  SET active = (\n    SELECT count(*) > 0 FROM public.rental r WHERE r.customer_id = c.customer_id\n  )::int;\nEND;\n$function$\n",
+      "reads": [
+        "public.rental"
+      ],
+      "writes": [
+        "public.customer"
+      ],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_fc2cc730e9",
+      "schema": "bench",
+      "name": "tag_long_films",
+      "args": "",
+      "returns": "void",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.tag_long_films()\n RETURNS void\n LANGUAGE plpgsql\nAS $function$\nDECLARE\n  rec record;\nBEGIN\n  FOR rec IN SELECT film_id FROM public.film WHERE length > 180 LOOP\n    UPDATE public.film SET rental_duration = rental_duration WHERE film_id = rec.film_id;\n  END LOOP;\nEND;\n$function$\n",
+      "reads": [
+        "public.film"
+      ],
+      "writes": [
+        "public.film"
+      ],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_7faa669bf9",
+      "schema": "bench",
+      "name": "top_customer_city",
+      "args": "",
+      "returns": "text",
+      "kind": "function",
+      "language": "sql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.top_customer_city()\n RETURNS text\n LANGUAGE sql\n STABLE\nAS $function$\n  SELECT ci.city\n  FROM public.city ci\n  WHERE ci.city_id IN (\n    SELECT a.city_id FROM public.address a\n    WHERE a.address_id IN (SELECT cu.address_id FROM public.customer cu)\n  )\n  LIMIT 1;\n$function$\n",
+      "reads": [
+        "public.address",
+        "public.city",
+        "public.customer"
+      ],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_803b6dcb8f",
+      "schema": "bench",
+      "name": "touch_last_update",
+      "args": "",
+      "returns": "trigger",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.touch_last_update()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n  NEW.last_update := now();\n  RETURN NEW;\nEND;\n$function$\n",
+      "reads": [],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_cd605b8721",
+      "schema": "bench",
+      "name": "upsert_store_stat",
+      "args": "p_store integer, p_customers bigint",
+      "returns": "void",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION bench.upsert_store_stat(p_store integer, p_customers bigint)\n RETURNS void\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n  INSERT INTO bench.store_stats (store_id, customers)\n  VALUES (p_store, p_customers)\n  ON CONFLICT (store_id) DO UPDATE SET customers = excluded.customers;\nEND;\n$function$\n",
+      "reads": [],
+      "writes": [
+        "bench.store_stats"
+      ],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_be95d3dc6f",
+      "schema": "public",
+      "name": "_group_concat",
+      "args": "text, text",
+      "returns": "text",
+      "kind": "function",
+      "language": "sql",
+      "definition": "CREATE OR REPLACE FUNCTION public._group_concat(text, text)\n RETURNS text\n LANGUAGE sql\n IMMUTABLE\nAS $function$\nSELECT CASE\n  WHEN $2 IS NULL THEN $1\n  WHEN $1 IS NULL THEN $2\n  ELSE $1 || ', ' || $2\nEND\n$function$\n",
+      "reads": [],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_fe31e9d114",
+      "schema": "public",
+      "name": "film_in_stock",
+      "args": "p_film_id integer, p_store_id integer, OUT p_film_count integer",
+      "returns": "SETOF integer",
+      "kind": "function",
+      "language": "sql",
+      "definition": "CREATE OR REPLACE FUNCTION public.film_in_stock(p_film_id integer, p_store_id integer, OUT p_film_count integer)\n RETURNS SETOF integer\n LANGUAGE sql\nAS $function$\n     SELECT inventory_id\n     FROM inventory\n     WHERE film_id = $1\n     AND store_id = $2\n     AND inventory_in_stock(inventory_id);\n$function$\n",
+      "reads": [
+        "public.inventory"
+      ],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_e3703fe1b5",
+      "schema": "public",
+      "name": "film_not_in_stock",
+      "args": "p_film_id integer, p_store_id integer, OUT p_film_count integer",
+      "returns": "SETOF integer",
+      "kind": "function",
+      "language": "sql",
+      "definition": "CREATE OR REPLACE FUNCTION public.film_not_in_stock(p_film_id integer, p_store_id integer, OUT p_film_count integer)\n RETURNS SETOF integer\n LANGUAGE sql\nAS $function$\n    SELECT inventory_id\n    FROM inventory\n    WHERE film_id = $1\n    AND store_id = $2\n    AND NOT inventory_in_stock(inventory_id);\n$function$\n",
+      "reads": [
+        "public.inventory"
+      ],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_cf280dc2ab",
+      "schema": "public",
+      "name": "get_customer_balance",
+      "args": "p_customer_id integer, p_effective_date timestamp with time zone",
+      "returns": "numeric",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION public.get_customer_balance(p_customer_id integer, p_effective_date timestamp with time zone)\n RETURNS numeric\n LANGUAGE plpgsql\nAS $function$\n       --#OK, WE NEED TO CALCULATE THE CURRENT BALANCE GIVEN A CUSTOMER_ID AND A DATE\n       --#THAT WE WANT THE BALANCE TO BE EFFECTIVE FOR. THE BALANCE IS:\n       --#   1) RENTAL FEES FOR ALL PREVIOUS RENTALS\n       --#   2) ONE DOLLAR FOR EVERY DAY THE PREVIOUS RENTALS ARE OVERDUE\n       --#   3) IF A FILM IS MORE THAN RENTAL_DURATION * 2 OVERDUE, CHARGE THE REPLACEMENT_COST\n       --#   4) SUBTRACT ALL PAYMENTS MADE BEFORE THE DATE SPECIFIED\nDECLARE\n    v_rentfees DECIMAL(5,2); --#FEES PAID TO RENT THE VIDEOS INITIALLY\n    v_overfees INTEGER;      --#LATE FEES FOR PRIOR RENTALS\n    v_payments DECIMAL(5,2); --#SUM OF PAYMENTS MADE PREVIOUSLY\nBEGIN\n    SELECT COALESCE(SUM(film.rental_rate),0) INTO v_rentfees\n    FROM film, inventory, rental\n    WHERE film.film_id = inventory.film_id\n      AND inventory.inventory_id = rental.inventory_id\n      AND rental.rental_date <= p_effective_date\n      AND rental.customer_id = p_customer_id;\n\n    SELECT COALESCE(SUM(IF((rental.return_date - rental.rental_date) > (film.rental_duration * '1 day'::interval),\n        ((rental.return_date - rental.rental_date) - (film.rental_duration * '1 day'::interval)),0)),0) INTO v_overfees\n    FROM rental, inventory, film\n    WHERE film.film_id = inventory.film_id\n      AND inventory.inventory_id = rental.inventory_id\n      AND rental.rental_date <= p_effective_date\n      AND rental.customer_id = p_customer_id;\n\n    SELECT COALESCE(SUM(payment.amount),0) INTO v_payments\n    FROM payment\n    WHERE payment.payment_date <= p_effective_date\n    AND payment.customer_id = p_customer_id;\n\n    RETURN v_rentfees + v_overfees - v_payments;\nEND\n$function$\n",
+      "reads": [
+        "public.film",
+        "public.inventory",
+        "public.payment",
+        "public.rental"
+      ],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_73e1cffc4d",
+      "schema": "public",
+      "name": "inventory_held_by_customer",
+      "args": "p_inventory_id integer",
+      "returns": "integer",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION public.inventory_held_by_customer(p_inventory_id integer)\n RETURNS integer\n LANGUAGE plpgsql\nAS $function$\nDECLARE\n    v_customer_id INTEGER;\nBEGIN\n\n  SELECT customer_id INTO v_customer_id\n  FROM rental\n  WHERE return_date IS NULL\n  AND inventory_id = p_inventory_id;\n\n  RETURN v_customer_id;\nEND $function$\n",
+      "reads": [
+        "public.rental"
+      ],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_5f3183469a",
+      "schema": "public",
+      "name": "inventory_in_stock",
+      "args": "p_inventory_id integer",
+      "returns": "boolean",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION public.inventory_in_stock(p_inventory_id integer)\n RETURNS boolean\n LANGUAGE plpgsql\nAS $function$\nDECLARE\n    v_rentals INTEGER;\n    v_out     INTEGER;\nBEGIN\n    -- AN ITEM IS IN-STOCK IF THERE ARE EITHER NO ROWS IN THE rental TABLE\n    -- FOR THE ITEM OR ALL ROWS HAVE return_date POPULATED\n\n    SELECT count(*) INTO v_rentals\n    FROM rental\n    WHERE inventory_id = p_inventory_id;\n\n    IF v_rentals = 0 THEN\n      RETURN TRUE;\n    END IF;\n\n    SELECT COUNT(rental_id) INTO v_out\n    FROM inventory LEFT JOIN rental USING(inventory_id)\n    WHERE inventory.inventory_id = p_inventory_id\n    AND rental.return_date IS NULL;\n\n    IF v_out > 0 THEN\n      RETURN FALSE;\n    ELSE\n      RETURN TRUE;\n    END IF;\nEND $function$\n",
+      "reads": [
+        "public.inventory",
+        "public.rental"
+      ],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_a24ce254aa",
+      "schema": "public",
+      "name": "last_day",
+      "args": "timestamp with time zone",
+      "returns": "date",
+      "kind": "function",
+      "language": "sql",
+      "definition": "CREATE OR REPLACE FUNCTION public.last_day(timestamp with time zone)\n RETURNS date\n LANGUAGE sql\n IMMUTABLE STRICT\nAS $function$\n  SELECT CASE\n    WHEN EXTRACT(MONTH FROM $1) = 12 THEN\n      (((EXTRACT(YEAR FROM $1) + 1) operator(pg_catalog.||) '-01-01')::date - INTERVAL '1 day')::date\n    ELSE\n      ((EXTRACT(YEAR FROM $1) operator(pg_catalog.||) '-' operator(pg_catalog.||) (EXTRACT(MONTH FROM $1) + 1) operator(pg_catalog.||) '-01')::date - INTERVAL '1 day')::date\n    END\n$function$\n",
+      "reads": [],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_fddd69b837",
+      "schema": "public",
+      "name": "last_updated",
+      "args": "",
+      "returns": "trigger",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION public.last_updated()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n    NEW.last_update = CURRENT_TIMESTAMP;\n    RETURN NEW;\nEND $function$\n",
+      "reads": [],
+      "writes": [],
+      "flags": [],
+      "explanation": null
+    },
+    {
+      "id": "rtn_67ad05d860",
+      "schema": "public",
+      "name": "rewards_report",
+      "args": "min_monthly_purchases integer, min_dollar_amount_purchased numeric",
+      "returns": "SETOF customer",
+      "kind": "function",
+      "language": "plpgsql",
+      "definition": "CREATE OR REPLACE FUNCTION public.rewards_report(min_monthly_purchases integer, min_dollar_amount_purchased numeric)\n RETURNS SETOF customer\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\nDECLARE\n    last_month_start DATE;\n    last_month_end DATE;\nrr RECORD;\ntmpSQL TEXT;\nBEGIN\n\n    /* Some sanity checks... */\n    IF min_monthly_purchases = 0 THEN\n        RAISE EXCEPTION 'Minimum monthly purchases parameter must be > 0';\n    END IF;\n    IF min_dollar_amount_purchased = 0.00 THEN\n        RAISE EXCEPTION 'Minimum monthly dollar amount purchased parameter must be > $0.00';\n    END IF;\n\n    last_month_start := CURRENT_DATE - '3 month'::interval;\n    last_month_start := to_date((extract(YEAR FROM last_month_start) || '-' || extract(MONTH FROM last_month_start) || '-01'),'YYYY-MM-DD');\n    last_month_end := LAST_DAY(last_month_start);\n\n    /*\n    Create a temporary storage area for Customer IDs.\n    */\n    CREATE TEMPORARY TABLE tmpCustomer (customer_id INTEGER NOT NULL PRIMARY KEY);\n\n    /*\n    Find all customers meeting the monthly purchase requirements\n    */\n\n    tmpSQL := 'INSERT INTO tmpCustomer (customer_id)\n        SELECT p.customer_id\n        FROM payment AS p\n        WHERE DATE(p.payment_date) BETWEEN '||quote_literal(last_month_start) ||' AND '|| quote_literal(last_month_end) || '\n        GROUP BY customer_id\n        HAVING SUM(p.amount) > '|| min_dollar_amount_purchased || '\n        AND COUNT(customer_id) > ' ||min_monthly_purchases ;\n\n    EXECUTE tmpSQL;\n\n    /*\n    Output ALL customer information of matching rewardees.\n    Customize output as needed.\n    */\n    FOR rr IN EXECUTE 'SELECT c.* FROM tmpCustomer AS t INNER JOIN customer AS c ON t.customer_id = c.customer_id' LOOP\n        RETURN NEXT rr;\n    END LOOP;\n\n    /* Clean up */\n    tmpSQL := 'DROP TABLE tmpCustomer';\n    EXECUTE tmpSQL;\n\nRETURN;\nEND\n$function$\n",
+      "reads": [],
+      "writes": [],
+      "flags": [
+        {
+          "kind": "dynamic_sql",
+          "detail": "PLpgSQL_stmt_dynexecute"
+        },
+        {
+          "kind": "dynamic_sql",
+          "detail": "PLpgSQL_stmt_dynfors"
+        }
+      ],
+      "explanation": null
+    }
+  ],
+  "triggers": [
+    {
+      "name": "film_fulltext_trigger",
+      "relation_id": "public.film",
+      "routine_id": null
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.actor",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.address",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.category",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.city",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.country",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.customer",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.film",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.film_actor",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.film_category",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.film_embedding",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.inventory",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.language",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.rental",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.staff",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "last_updated",
+      "relation_id": "public.store",
+      "routine_id": "rtn_fddd69b837"
+    },
+    {
+      "name": "store_stats_touch",
+      "relation_id": "bench.store_stats",
+      "routine_id": "rtn_803b6dcb8f"
+    }
+  ]
+}
