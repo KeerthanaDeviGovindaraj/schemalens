@@ -8,7 +8,9 @@
 
 Point SchemaLens at a database and get searchable documentation, a map of which functions read and write which tables, plain-English explanations of each function, and an MCP server so tools like Kiro write correct SQL against your schema.
 
-> Status: v0.1 feature-complete. Scan, dependency analysis, benchmark, web UI, AI explanations, and the MCP server all work end to end. Public demo link lands at launch.
+**▶ [Live demo](https://web-sigma-six-99.vercel.app)** — browse the Pagila sample database right in your browser, no install.
+
+> Status: v0.1 feature-complete. Scan, dependency analysis, benchmark, web UI, AI explanations, and the MCP server all work end to end.
 
 ## Screenshots
 
