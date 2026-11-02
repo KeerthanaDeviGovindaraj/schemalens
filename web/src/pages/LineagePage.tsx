@@ -70,8 +70,8 @@ function labelFor(index: ReturnType<typeof useIndex>, id: string): string {
   return rtn ? `${rtn.schema}.${rtn.name}` : id;
 }
 
-const NODE_W = 190;
-const NODE_H = 44;
+const NODE_W = 230;
+const NODE_H = 46;
 
 function layout(
   graph: Map<string, GraphEdge[]>,
@@ -101,7 +101,7 @@ function layout(
 
   const g = new dagre.graphlib.Graph();
   g.setDefaultEdgeLabel(() => ({}));
-  g.setGraph({ rankdir: "LR", nodesep: 30, ranksep: 90 });
+  g.setGraph({ rankdir: "LR", nodesep: 24, ranksep: 120 });
 
   for (const id of visited) g.setNode(id, { width: NODE_W, height: NODE_H });
   for (const e of edgeSet.values()) g.setEdge(e.source, e.target);

@@ -656,9 +656,15 @@ table.columns th {
 .node-link {
   color: var(--text);
   font-weight: 500;
+  white-space: nowrap;
 }
 .node-link:hover {
   color: var(--accent);
+}
+/* hide the default connection handles so nodes read as clean pills/boxes */
+.flow-node .react-flow__handle {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .edge-read .react-flow__edge-path {

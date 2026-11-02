@@ -2,9 +2,27 @@
 
 **Make legacy PostgreSQL databases understandable, for people and for AI coding assistants.**
 
+[![CI](https://github.com/KeerthanaDeviGovindaraj/schemalens/actions/workflows/ci.yml/badge.svg)](https://github.com/KeerthanaDeviGovindaraj/schemalens/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+![License: MIT](https://img.shields.io/badge/license-MIT-green)
+
 Point SchemaLens at a database and get searchable documentation, a map of which functions read and write which tables, plain-English explanations of each function, and an MCP server so tools like Kiro write correct SQL against your schema.
 
-> Status: v0.1 feature-complete. Scan, dependency analysis, benchmark, web UI, AI explanations, and the MCP server all work end to end. Public demo link and GIF land at launch.
+> Status: v0.1 feature-complete. Scan, dependency analysis, benchmark, web UI, AI explanations, and the MCP server all work end to end. Public demo link lands at launch.
+
+## Screenshots
+
+Browse and search the whole schema:
+
+![SchemaLens search and overview](docs/img/home.png)
+
+See exactly what each function reads and writes, with the source highlighted:
+
+![Routine detail with reads, writes, and highlighted source](docs/img/routine.png)
+
+Explore lineage as a graph — distinct read, write, and trigger edges:
+
+![Lineage graph centered on a table](docs/img/lineage.png)
 
 ## What you get
 
